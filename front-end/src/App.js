@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from './config';
-import { FileText, MapPin, Link as LinkIcon, CheckCircle, AlertTriangle, DollarSign, Eye } from 'lucide-react';
+import { FileText, MapPin, Link as LinkIcon, CheckCircle, AlertTriangle, DollarSign } from 'lucide-react';
 import './App.css';
+
+// Replace with the actual owner's address of the deployed contract
+const OWNER_ADDRESS = "0x0a5be85d5437d8db3887de2acf64457c67030278";
 
 function App() {
   const [reports, setReports] = useState([]);
   const [walletConnected, setWalletConnected] = useState(false);
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState(null);
-  const [preview, setPreview] = useState(null); // New state to manage image preview
+  const [isOwner, setIsOwner] = useState(false); // State to check if the user is the owner
+  const [preview, setPreview] = useState(null); // State to manage image preview
 
   // Fetch reports from the backend
   useEffect(() => {
@@ -30,10 +34,15 @@ function App() {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
+        const connectedAccount = accounts[0];
+        setAccount(connectedAccount);
 
         const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
         setContract(contractInstance);
+        
+        // Check if the connected account is the owner
+        setIsOwner(connectedAccount.toLowerCase() === OWNER_ADDRESS.toLowerCase());
+        
         setWalletConnected(true);
       } catch (error) {
         console.error('Error connecting wallet:', error);
@@ -48,6 +57,7 @@ function App() {
     setAccount(null);
     setWalletConnected(false);
     setContract(null);
+    setIsOwner(false); // Reset owner state on disconnect
   };
 
   // Verifying reports
@@ -71,13 +81,9 @@ function App() {
     }
   };
 
-  // Toggle image preview visibility
+  // Function to toggle image preview
   const togglePreview = (link) => {
-    if (preview === link) {
-      setPreview(null); // Close the preview if it's already open
-    } else {
-      setPreview(link); // Set the link for preview
-    }
+    setPreview(preview === link ? null : link);
   };
 
   return (
@@ -97,6 +103,8 @@ function App() {
               Disconnect Wallet
             </button>
             <p className="mt-2 text-indigo-800 font-bold">Connected Account: {account}</p>
+            {isOwner && <p className="mt-2 text-green-600 font-bold">You are the contract owner!</p>}
+            {!isOwner && <p className="mt-2 text-red-600 font-bold">You are not the contract owner.</p>}
           </div>
         ) : (
           <button
@@ -142,7 +150,6 @@ function App() {
               >
                 {preview === report.evidenceLink ? 'Hide Preview' : 'View Preview'}
               </button>
-              {/* Display preview if the link matches the current preview state */}
               {preview === report.evidenceLink && (
                 <div className="mt-4">
                   <img
