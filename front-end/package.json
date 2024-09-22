@@ -2,7 +2,7 @@
   "name": "admin-panel",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AbelBoby.github.io/ipfs-admin-panel",
+  "homepage": "https://kichuman28.github.io/Traffix-admin-panel",
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",
     "@testing-library/jest-dom": "^5.17.0",
