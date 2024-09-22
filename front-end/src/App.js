@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from './config';
-import { FileText, MapPin, Link as LinkIcon, CheckCircle, AlertTriangle, DollarSign } from 'lucide-react';
+import { FileText, MapPin, Link as LinkIcon, CheckCircle, AlertTriangle, DollarSign, Eye } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState(null);
+  const [preview, setPreview] = useState(null); // New state to manage image preview
 
   // Fetch reports from the backend
   useEffect(() => {
@@ -70,6 +71,15 @@ function App() {
     }
   };
 
+  // Toggle image preview visibility
+  const togglePreview = (link) => {
+    if (preview === link) {
+      setPreview(null); // Close the preview if it's already open
+    } else {
+      setPreview(link); // Set the link for preview
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-4xl font-bold mb-6 text-center text-indigo-800">
@@ -126,12 +136,25 @@ function App() {
                 <LinkIcon className="w-5 h-5 mr-2 text-indigo-500" />
                 <span className="font-semibold">Evidence Link:</span>
               </p>
-              <a href={report.evidenceLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                {report.evidenceLink}
-              </a>
+              <button 
+                className="mt-2 text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md" 
+                onClick={() => togglePreview(report.evidenceLink)}
+              >
+                {preview === report.evidenceLink ? 'Hide Preview' : 'View Preview'}
+              </button>
+              {/* Display preview if the link matches the current preview state */}
+              {preview === report.evidenceLink && (
+                <div className="mt-4">
+                  <img
+                    src={report.evidenceLink}
+                    alt="Evidence Preview"
+                    className="max-w-full h-auto rounded-lg shadow-md"
+                  />
+                </div>
+              )}
             </div>
 
-            {/* Verify Button should be visible here */}
+            {/* Verify Button */}
             {!report.verified && (
               <button
                 className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
