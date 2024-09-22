@@ -1,11 +1,12 @@
 # Traffix Admin Panel
 
-![image](https://github.com/user-attachments/assets/6a309097-58f6-4aef-813e-d6b31d15c24e)
+![image](https://github.com/user-attachments/assets/6c2e44fc-f5b1-4696-aad1-7d48f8f79393)
+
 
 ## Overview
 The *Traffix Admin Panel* is a decentralized application designed for the administrator (or owner) to review road safety reports submitted by citizens and reward them for their efforts by paying them directly through the blockchain. The platform consists of two parts:
 
-![image](https://github.com/user-attachments/assets/c858c8d0-b0f2-4cdd-8a3f-6690601f6052)
+![image](https://github.com/user-attachments/assets/359f289b-47f1-43e0-8dac-afa69e14ae75)
 
 
 1. *Backend*: A Node.js-based server that interacts with the blockchain to fetch report data and process payments.
