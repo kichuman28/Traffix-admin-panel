@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Traffix-admin-panel/static/css/main.3a99caf8.css",
+    "main.js": "/Traffix-admin-panel/static/js/main.d69ee2ab.js",
+    "static/js/453.b3b29214.chunk.js": "/Traffix-admin-panel/static/js/453.b3b29214.chunk.js",
+    "index.html": "/Traffix-admin-panel/index.html",
+    "main.3a99caf8.css.map": "/Traffix-admin-panel/static/css/main.3a99caf8.css.map",
+    "main.d69ee2ab.js.map": "/Traffix-admin-panel/static/js/main.d69ee2ab.js.map",
+    "453.b3b29214.chunk.js.map": "/Traffix-admin-panel/static/js/453.b3b29214.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a99caf8.css",
+    "static/js/main.d69ee2ab.js"
+  ]
+}
